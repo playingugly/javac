@@ -2551,7 +2551,7 @@ public class Parser {
             } else if (S.token() == LBRACE && !isInterface &&
                        (mods.flags & Flags.StandardFlags & ~Flags.STATIC) == 0 &&
                        mods.annotations.isEmpty()) {
-                //Modifier只有static或者没有，也就是说这肯定是个块或者静态块
+                //【B】
                 return List.<JCTree>of(block(pos, mods.flags));
             } else {
                 pos = S.pos();
@@ -2573,9 +2573,11 @@ public class Parser {
                 } else {
                     type = type();
                 }
+                //遇到括号，说明是方法
                 if (S.token() == LPAREN && !isInterface && type.getTag() == JCTree.IDENT) {
                     if (isInterface || name != className)
                         log.error(pos, "invalid.meth.decl.ret.type.req");
+                    //【C】【D】【E】
                     return List.of(methodDeclaratorRest(
                         pos, mods, null, names.init, typarams,
                         isInterface, true, dc));
