@@ -2546,7 +2546,7 @@ public class Parser {
             if (S.token() == CLASS ||
                 S.token() == INTERFACE ||
                 allowEnums && S.token() == ENUM) {
-                //内部类
+                //【H】
                 return List.<JCTree>of(classOrInterfaceOrEnumDeclaration(mods, dc));
             } else if (S.token() == LBRACE && !isInterface &&
                        (mods.flags & Flags.StandardFlags & ~Flags.STATIC) == 0 &&
