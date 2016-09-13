@@ -84,6 +84,8 @@ public class Name implements javax.lang.model.element.Name {
 
     /** Create a name from the bytes in cs[start..start+len-1].
      *  Assume that bytes are in utf8 format.
+     *
+     *  len等于0时，
      */
     public static Name fromUtf(Table table, byte cs[], int start, int len) {
         int h = hashValue(cs, start, len) & table.hashMask;
@@ -108,7 +110,7 @@ public class Name implements javax.lang.model.element.Name {
             n.next = table.hashes[h];
             table.hashes[h] = n;
             table.nc = nc + len;
-            if (len == 0) table.nc++;
+            if (len == 0) table.nc++;//todo 为什么要加1？
         }
         return n;
     }

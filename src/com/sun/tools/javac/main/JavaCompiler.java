@@ -777,6 +777,7 @@ public class JavaCompiler implements ClassReader.SourceCompleter {
         try {
             initProcessAnnotations(processors);
 
+            // enterTrees  将符号输入到符号表
             // These method calls must be chained to avoid memory leaks
             delegateCompiler = processAnnotations(enterTrees(stopIfError(parseFiles(sourceFileObjects))),
                                                   classnames);

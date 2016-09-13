@@ -243,6 +243,7 @@ public class Enter extends JCTree.Visitor {
      *  @param tree    The tree to be visited.
      *  @param env     The environment visitor argument.
      */
+    //第一次传入的tree为JCCompilationUnit，所以执行visitTopLevel方法
     Type classEnter(JCTree tree, Env<AttrContext> env) {
         Env<AttrContext> prevEnv = this.env;
         try {
@@ -274,6 +275,7 @@ public class Enter extends JCTree.Visitor {
         boolean isModuleInfo = TreeInfo.isModuleInfo(tree);
         boolean isPackageInfo = TreeInfo.isPackageInfo(tree);
 
+        //没有模块module的话为null
         if (tree.mid != null) {
             tree.modle = reader.enterModule(TreeInfo.fullName(tree.mid));
             if (tree.moduleAnnotations.nonEmpty()) {
@@ -310,6 +312,8 @@ public class Enter extends JCTree.Visitor {
         } else {
             tree.packge = syms.unnamedPackage;
         }
+        //将会调用ClassReader的complete方法
+        //TODO 解决class直接编译问题？
         tree.packge.complete(); // Find all classes in package.
 
         Env<AttrContext> env = topLevelEnv(tree);
@@ -366,6 +370,8 @@ public class Enter extends JCTree.Visitor {
             }
         }
 
+        //defs包括importDeclaration和类的定义
+        //这里并未处理import，所以会执行visitClassDef方法
         classEnter(tree.defs, env);
 
         if (addEnv) {

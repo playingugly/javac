@@ -286,7 +286,15 @@ public class Convert {
 /* Conversion routines for qualified name splitting
  */
     /** Return the last part of a class name.
+     *
+     * 输入    com.apple.javac
+     * 输出    javac
+     *
+     * 对于不存在.的情况处理的也非常好，这是巧合吗？
+     * 输入    javac
+     * 输出    javac
      */
+
     public static Name shortName(Name classname) {
         return classname.subName(
             classname.lastIndexOf((byte)'.') + 1, classname.len);
@@ -298,6 +306,11 @@ public class Convert {
 
     /** Return the package name of a class name, excluding the trailing '.',
      *  "" if not existent.
+     *  输入 com.apple.javac
+     *  输出 com.apple
+     *
+     *  输入 com
+     *  输出 len=0
      */
     public static Name packagePart(Name classname) {
         return classname.subName(0, classname.lastIndexOf((byte)'.'));

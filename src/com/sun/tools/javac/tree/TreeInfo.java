@@ -546,6 +546,7 @@ public class TreeInfo {
 
     /** Skip parens and return the enclosed expression
      */
+    //如果输入的表达式是被括起来的，跳过括号
     public static JCTree skipParens(JCTree tree) {
         if (tree.getTag() == JCTree.PARENS)
             return skipParens((JCParens)tree);
@@ -580,6 +581,16 @@ public class TreeInfo {
 
     /** If this tree is a qualified identifier, its return fully qualified name,
      *  otherwise return null.
+     */
+
+    /**
+     * 假设处理的是package com.apple.javac, 这里输入的为select.select.ident
+     *                                             javac  .apple .com
+     * 这里通过递归逆向输出com.apple.javac，有一点问题是每次调用Name.append时
+     * 都会在字符表中进行缓存，那么这里除了基本字符串外，还会缓存：
+     * com.apple
+     * com.apple.javac
+     * 这样会不会造成内存浪费呢？
      */
     public static Name fullName(JCTree tree) {
         tree = skipParens(tree);

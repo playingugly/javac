@@ -425,6 +425,7 @@ public abstract class JCTree implements Tree, Cloneable, DiagnosticPosition {
         public JCExpression mid;
         public ModuleSymbol modle;
         public List<JCAnnotation> packageAnnotations;
+        /**package的fullName，链式*/
         public JCExpression pid;
         public List<JCTree> defs;
         public JavaFileObject sourcefile;

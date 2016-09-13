@@ -2044,6 +2044,16 @@ public class ClassReader extends ClassFile implements Completer {
     }
 
     /** Make a package, given its fully qualified name.
+     *
+     * 递归创建package，并根据package的全路径缓存在packages这个map中
+     * 举个例子，输入com.apple.javac，干净的情况下，会创建三个package：
+     *
+     * package名        父package
+     * com              null
+     * apple            com
+     * javac            com.apple
+     *
+     * 由于packages初始化时预先放入了fullname为空的情况，所以这里不会死循环
      */
     public PackageSymbol enterPackage(Name fullname) {
         PackageSymbol p = packages.get(fullname);
